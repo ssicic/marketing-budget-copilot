@@ -1,0 +1,79 @@
+{
+  "description": "Planted parameters for the synthetic MMM dataset. Contributions and ROIs cover the full period; carry-over past the last week is ignored.",
+  "config": {
+    "seed": 42,
+    "n_weeks": 156,
+    "start_date": "2023-01-02",
+    "l_max": 8,
+    "intercept": 250000.0,
+    "trend_total_growth": 0.2,
+    "seasonality": [
+      -12000.0,
+      -15000.0,
+      4000.0,
+      6000.0
+    ],
+    "black_friday_effect": 60000.0,
+    "christmas_effect": 45000.0,
+    "promo_effect": 30000.0,
+    "promo_rate": 0.1,
+    "noise_sd": 10000.0,
+    "holdout_weeks": 12
+  },
+  "channels": {
+    "tv": {
+      "alpha": 0.7,
+      "adstock_half_life_weeks": 1.943,
+      "lam": 1.5,
+      "spend_scale": 68605.83389260317,
+      "half_saturation_spend": 50247.4747924913,
+      "beta": 134212.28718500384,
+      "total_spend": 3752027.463642083,
+      "total_contribution": 5252838.449098915,
+      "roi": 1.3999999999999997,
+      "marginal_roi": 1.288169707832445
+    },
+    "search": {
+      "alpha": 0.1,
+      "adstock_half_life_weeks": 0.301,
+      "lam": 3.0,
+      "spend_scale": 22812.601794998103,
+      "half_saturation_spend": 8354.0682228257,
+      "beta": 61121.971554500684,
+      "total_spend": 2797869.658102411,
+      "total_contribution": 7834035.042686749,
+      "roi": 2.8,
+      "marginal_roi": 1.2478821486172633
+    },
+    "social": {
+      "alpha": 0.3,
+      "adstock_half_life_weeks": 0.576,
+      "lam": 0.8,
+      "spend_scale": 23914.24980209603,
+      "half_saturation_spend": 32840.61088357701,
+      "beta": 122930.65384569834,
+      "total_spend": 2041095.7941485802,
+      "total_contribution": 4082191.5882971594,
+      "roi": 1.9999999999999996,
+      "marginal_roi": 1.9090059326837763
+    },
+    "radio": {
+      "alpha": 0.5,
+      "adstock_half_life_weeks": 1.0,
+      "lam": 1.2,
+      "spend_scale": 10937.231162429516,
+      "half_saturation_spend": 10013.147132540718,
+      "beta": 13265.440798465102,
+      "total_spend": 552154.9305684097,
+      "total_contribution": 386508.45139788685,
+      "roi": 0.7000000000000001,
+      "marginal_roi": 0.6494700571702078
+    }
+  },
+  "media_share_of_sales": 0.28668007332510204,
+  "date_range": [
+    "2023-01-02",
+    "2025-12-22"
+  ],
+  "holdout_start": "2025-10-06"
+}
