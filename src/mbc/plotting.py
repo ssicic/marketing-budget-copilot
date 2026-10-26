@@ -13,6 +13,18 @@ CHANNEL_COLORS = {
     "social": "#1baf7a",
     "radio": "#eda100",
 }
+# Real (Conjura) channels, in the same fixed categorical order.
+REAL_CHANNEL_COLORS = {
+    "meta_facebook": "#2a78d6",
+    "meta_instagram": "#eb6834",
+    "google_pmax": "#1baf7a",
+    "google_shopping": "#eda100",
+    "google_paid_search": "#e87ba4",
+    "meta_other": "#008300",
+    "google_display": "#6250d6",
+    "google_video": "#e34948",
+    "tiktok": "#52514e",
+}
 BASE_COLOR = "#b9b8b2"
 TRUTH_COLOR = "#0b0b0b"
 TEXT_SECONDARY = "#52514e"

@@ -25,6 +25,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest==9.1.1", "ruff==0.17.2"]
+notebooks = ["jupyterlab==4.6.4", "ipykernel==7.4.0", "nbconvert==7.17.2", "nbformat==5.11.1"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
