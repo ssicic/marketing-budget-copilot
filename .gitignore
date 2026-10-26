@@ -10,6 +10,9 @@ __pycache__/
 # Secrets
 .env
 
+# Raw third-party data (fetch with scripts/download_conjura.sh)
+data/raw/
+
 # Generated artifacts
 data/*.csv
 data/*.parquet
