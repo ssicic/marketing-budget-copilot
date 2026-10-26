@@ -22,3 +22,5 @@ mlartifacts/
 
 # OS / tooling
 .DS_Store
+models/
+mlflow.db
