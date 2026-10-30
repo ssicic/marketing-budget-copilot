@@ -1,0 +1,15 @@
+{
+  "weekly_budget": 57629.21324129119,
+  "quarterly_budget": 749179.7721367854,
+  "bounds_band": 0.5,
+  "model_promised_uplift_q": 105394.09174437664,
+  "model_promised_uplift_q_hdi90": [
+    -15422.65617943964,
+    236278.0648989861
+  ],
+  "prob_model_uplift_positive": 0.917,
+  "true_uplift_of_model_plan_q": 51864.56451396698,
+  "true_best_uplift_q": 59596.99314486158,
+  "share_of_best_captured": 0.8702547188563776,
+  "optimiser_converged": true
+}
