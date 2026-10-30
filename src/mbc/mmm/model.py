@@ -14,7 +14,7 @@ from pymc_extras.prior import Prior
 from pymc_marketing.mmm import GeometricAdstock, LogisticSaturation
 from pymc_marketing.mmm.multidimensional import MMM
 
-from mbc.mmm.data import CHANNELS, CONTROLS, DATE, SPEND_COLUMNS, TARGET
+from mbc.mmm.data import CONTROLS, DATE, SPEND_COLUMNS, TARGET
 
 PriorSet = Literal["informed", "weak"]
 
@@ -24,19 +24,22 @@ PriorSet = Literal["informed", "weak"]
 _ALPHA_PRIOR = {"tv": (3.0, 3.0), "search": (1.5, 4.5), "social": (2.0, 4.0), "radio": (3.0, 3.0)}
 
 
-def model_config(priors: PriorSet, spend_share: pd.Series) -> dict:
+def model_config(priors: PriorSet, spend_share: pd.Series,
+                 channels: list[str] = SPEND_COLUMNS,
+                 alpha_prior: dict[str, tuple[float, float]] | None = None) -> dict:
     """Priors for the MMM.
 
     informed: what we would use in practice, mildly informative.
     weak: near-flat priors for sensitivity analysis. If results change a lot between
           the two, the data alone isn't pinning those parameters down.
     """
-    share = spend_share.reindex(SPEND_COLUMNS).to_numpy()
+    share = spend_share.reindex(channels).to_numpy()
+    alpha_prior = alpha_prior or {f"spend_{c}": ab for c, ab in _ALPHA_PRIOR.items()}
     if priors == "informed":
         alpha = Prior(
             "Beta",
-            alpha=[_ALPHA_PRIOR[c][0] for c in CHANNELS],
-            beta=[_ALPHA_PRIOR[c][1] for c in CHANNELS],
+            alpha=[alpha_prior[c][0] for c in channels],
+            beta=[alpha_prior[c][1] for c in channels],
             dims="channel",
         )
         # Spend-share prior: a channel taking 40% of the budget is a priori allowed a
@@ -74,15 +77,18 @@ def build_mmm(
     l_max: int = 8,
     yearly_seasonality: int = 2,
     sampler_config: dict | None = None,
+    channels: list[str] = SPEND_COLUMNS,
+    controls: list[str] = CONTROLS,
+    alpha_prior: dict[str, tuple[float, float]] | None = None,
 ) -> MMM:
     return MMM(
         date_column=DATE,
-        channel_columns=SPEND_COLUMNS,
+        channel_columns=channels,
         target_column=TARGET,
-        control_columns=CONTROLS,
+        control_columns=controls,
         adstock=GeometricAdstock(l_max=l_max),
         saturation=LogisticSaturation(),
         yearly_seasonality=yearly_seasonality,
-        model_config=model_config(priors, spend_share),
+        model_config=model_config(priors, spend_share, channels, alpha_prior),
         sampler_config=sampler_config,
     )

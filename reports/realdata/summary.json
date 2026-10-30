@@ -1,0 +1,126 @@
+{
+  "semi-synthetic": {
+    "metrics": {
+      "max_r_hat": 1.0,
+      "min_ess_bulk": 2177.0,
+      "min_ess_tail": 1903.0,
+      "divergences": 0,
+      "divergence_rate": 0.0,
+      "converged": true,
+      "mape_train": 0.30667708413819844,
+      "mape_holdout": 0.27722179959385196,
+      "coverage90_holdout": 0.8333333333333334,
+      "media_share": 0.21817353973290315,
+      "fit_seconds": 31.3949031829834,
+      "train_weeks": 212
+    },
+    "roi": {
+      "facebook": {
+        "roi_mean": 1.736,
+        "roi_median": 1.709,
+        "roi_hdi_low": 0.946,
+        "roi_hdi_high": 2.486
+      },
+      "instagram": {
+        "roi_mean": 0.499,
+        "roi_median": 0.42,
+        "roi_hdi_low": 0.0,
+        "roi_hdi_high": 1.018
+      }
+    },
+    "planted_roi_train": {
+      "spend_facebook": 1.4992298974858993,
+      "spend_instagram": 0.9965773328854958
+    }
+  },
+  "real-informed": {
+    "metrics": {
+      "max_r_hat": 1.0,
+      "min_ess_bulk": 1428.0,
+      "min_ess_tail": 1120.0,
+      "divergences": 0,
+      "divergence_rate": 0.0,
+      "converged": true,
+      "mape_train": 0.233168800411472,
+      "mape_holdout": 0.2606942710614954,
+      "coverage90_holdout": 0.8333333333333334,
+      "media_share": 0.5810256290571386,
+      "fit_seconds": 41.74367833137512,
+      "train_weeks": 212
+    },
+    "roi": {
+      "facebook": {
+        "roi_mean": 3.073,
+        "roi_median": 3.056,
+        "roi_hdi_low": 2.359,
+        "roi_hdi_high": 3.812
+      },
+      "instagram": {
+        "roi_mean": 2.985,
+        "roi_median": 2.987,
+        "roi_hdi_low": 1.879,
+        "roi_hdi_high": 4.034
+      }
+    }
+  },
+  "real-weak": {
+    "metrics": {
+      "max_r_hat": 1.0,
+      "min_ess_bulk": 1091.0,
+      "min_ess_tail": 697.0,
+      "divergences": 0,
+      "divergence_rate": 0.0,
+      "converged": true,
+      "mape_train": 0.23286769682698913,
+      "mape_holdout": 0.2596493834571185,
+      "coverage90_holdout": 0.8333333333333334,
+      "media_share": 0.5769760075565831,
+      "fit_seconds": 35.991262912750244,
+      "train_weeks": 212
+    },
+    "roi": {
+      "facebook": {
+        "roi_mean": 3.055,
+        "roi_median": 3.049,
+        "roi_hdi_low": 2.341,
+        "roi_hdi_high": 3.798
+      },
+      "instagram": {
+        "roi_mean": 2.954,
+        "roi_median": 2.949,
+        "roi_hdi_low": 1.851,
+        "roi_hdi_high": 4.042
+      }
+    }
+  },
+  "real-first-75pct": {
+    "metrics": {
+      "max_r_hat": 1.0,
+      "min_ess_bulk": 2299.0,
+      "min_ess_tail": 2026.0,
+      "divergences": 0,
+      "divergence_rate": 0.0,
+      "converged": true,
+      "mape_train": 0.2057436836866839,
+      "mape_holdout": 0.35841644830342734,
+      "coverage90_holdout": 0.75,
+      "media_share": 0.48324694680303704,
+      "fit_seconds": 40.58867692947388,
+      "train_weeks": 156
+    },
+    "roi": {
+      "facebook": {
+        "roi_mean": 2.763,
+        "roi_median": 2.742,
+        "roi_hdi_low": 2.048,
+        "roi_hdi_high": 3.523
+      },
+      "instagram": {
+        "roi_mean": 3.006,
+        "roi_median": 3.011,
+        "roi_hdi_low": 2.119,
+        "roi_hdi_high": 3.963
+      }
+    }
+  }
+}

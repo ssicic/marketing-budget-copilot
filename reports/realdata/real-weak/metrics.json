@@ -1,0 +1,14 @@
+{
+  "max_r_hat": 1.0,
+  "min_ess_bulk": 1091.0,
+  "min_ess_tail": 697.0,
+  "divergences": 0,
+  "divergence_rate": 0.0,
+  "converged": true,
+  "mape_train": 0.23286769682698913,
+  "mape_holdout": 0.2596493834571185,
+  "coverage90_holdout": 0.8333333333333334,
+  "media_share": 0.5769760075565831,
+  "fit_seconds": 35.991262912750244,
+  "train_weeks": 212
+}

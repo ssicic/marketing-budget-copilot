@@ -87,11 +87,11 @@ def contributions_original_scale(idata: az.InferenceData) -> xr.DataArray:
     return idata.posterior["channel_contribution"] * idata.constant_data["target_scale"]
 
 
-def roi_samples(contrib: xr.DataArray, spend: pd.DataFrame) -> xr.DataArray:
+def roi_samples(contrib: xr.DataArray, spend: pd.DataFrame,
+                columns: list[str] = SPEND_COLUMNS) -> xr.DataArray:
     """Average ROI per posterior draw: total contribution / total spend, per channel."""
     total_spend = xr.DataArray(
-        spend[SPEND_COLUMNS].sum().to_numpy(), dims="channel",
-        coords={"channel": SPEND_COLUMNS},
+        spend[columns].sum().to_numpy(), dims="channel", coords={"channel": columns},
     )
     return contrib.sum("date") / total_spend
 
