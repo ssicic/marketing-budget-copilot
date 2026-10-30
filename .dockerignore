@@ -1,0 +1,7 @@
+# Only src/ and artifacts/champion/ are needed in the image.
+*
+!requirements-api.txt
+!src/
+!artifacts/champion/
+**/__pycache__
+**/*.egg-info
