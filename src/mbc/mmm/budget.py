@@ -46,7 +46,7 @@ def hdi(x: np.ndarray, prob: float = 0.9) -> tuple[float, float]:
 
 def run(model_name: str = "informed", band: float = 0.5) -> dict:
     apply_style()
-    out = ROOT / "reports" / "budget"
+    out = ROOT / "reports" / "budget" / model_name
     out.mkdir(parents=True, exist_ok=True)
     truth = json.loads((ROOT / "data" / "ground_truth.json").read_text())
     idata = az.from_netcdf(ROOT / "models" / f"{model_name}.nc")

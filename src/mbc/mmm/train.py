@@ -52,7 +52,8 @@ def _to_original(samples, y_max: float, target_scale: float) -> np.ndarray:
 
 
 def run(priors: str, draws: int, tune: int, chains: int, target_accept: float,
-        run_name: str, use_mlflow: bool, seed: int = 42) -> dict:
+        run_name: str, use_mlflow: bool, seed: int = 42,
+        lift_test: pd.DataFrame | None = None) -> dict:
     apply_style()
     out_dir = REPORTS / run_name
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -80,7 +81,11 @@ def run(priors: str, draws: int, tune: int, chains: int, target_accept: float,
     )
     prior_params = mmm.idata.prior
 
-    # 2. Fit
+    # 2. Fit. With a lift test, the experiment becomes an extra likelihood term:
+    #    the model's curve must reproduce the measured lift (within its sigma).
+    if lift_test is not None:
+        mmm.build_model(X_train, y_train)
+        mmm.add_lift_test_measurements(lift_test[["channel", "x", "delta_x", "delta_y", "sigma"]])
     t0 = time.time()
     mmm.fit(X_train, y_train, draws=draws, tune=tune, chains=chains,
             target_accept=target_accept, random_seed=seed, progressbar=False)
@@ -145,12 +150,12 @@ def run(priors: str, draws: int, tune: int, chains: int, target_accept: float,
 
     if use_mlflow:
         _log_mlflow(run_name, priors, draws, tune, chains, target_accept, seed, metrics, out_dir,
-                    model_path)
+                    model_path, calibrated=lift_test is not None)
     return metrics
 
 
 def _log_mlflow(run_name, priors, draws, tune, chains, target_accept, seed, metrics, out_dir,
-                model_path) -> None:
+                model_path, calibrated: bool = False) -> None:
     import mlflow
 
     mlflow.set_tracking_uri(f"sqlite:///{MLFLOW_DB}")
@@ -161,7 +166,7 @@ def _log_mlflow(run_name, priors, draws, tune, chains, target_accept, seed, metr
         mlflow.log_params({"priors": priors, "draws": draws, "tune": tune, "chains": chains,
                            "target_accept": target_accept, "seed": seed, "adstock": "geometric",
                            "l_max": 8, "saturation": "logistic", "yearly_fourier": 2,
-                           "holdout_weeks": 12})
+                           "holdout_weeks": 12, "lift_test_calibration": calibrated})
         mlflow.log_metrics(metrics)
         mlflow.log_artifacts(str(out_dir), artifact_path="report")
         mlflow.log_artifact(str(model_path), artifact_path="model")
@@ -177,11 +182,16 @@ def main() -> None:
     p.add_argument("--quick", action="store_true", help="2 chains x 200 draws")
     p.add_argument("--run-name", default=None)
     p.add_argument("--no-mlflow", action="store_true")
+    p.add_argument("--lift-test", action="store_true",
+                   help="calibrate with data/lift_test.csv (run `python -m mbc.experiments` first)")
     a = p.parse_args()
     if a.quick:
         a.draws, a.tune, a.chains = 200, 300, 2
-    name = a.run_name or f"{a.priors}{'-quick' if a.quick else ''}"
-    m = run(a.priors, a.draws, a.tune, a.chains, a.target_accept, name, not a.no_mlflow)
+    lift = pd.read_csv(ROOT / "data" / "lift_test.csv") if a.lift_test else None
+    suffix = ("-calibrated" if a.lift_test else "") + ("-quick" if a.quick else "")
+    name = a.run_name or f"{a.priors}{suffix}"
+    m = run(a.priors, a.draws, a.tune, a.chains, a.target_accept, name, not a.no_mlflow,
+            lift_test=lift)
     print(json.dumps({k: round(v, 4) if isinstance(v, float) else v for k, v in m.items()},
                      indent=2))
 
