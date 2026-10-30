@@ -11,7 +11,6 @@ import pandas as pd
 from mbc.simulate.generate import CHANNEL_COLS, CONTROL_COLS
 
 ROOT = Path(__file__).resolve().parents[3]
-SYNTHETIC_PATH = ROOT / "data" / "mmm_weekly.csv"
 
 CHANNELS = list(CHANNEL_COLS)  # tv, search, social, radio
 SPEND_COLUMNS = [CHANNEL_COLS[c] for c in CHANNELS]
@@ -39,11 +38,16 @@ def add_trend(df: pd.DataFrame) -> pd.DataFrame:
     return df.assign(trend=np.arange(len(df)) / (len(df) - 1))
 
 
-def load_synthetic(path: Path = SYNTHETIC_PATH) -> pd.DataFrame:
-    if not path.exists():
-        raise FileNotFoundError(f"{path} not found. Run `python -m mbc.simulate` first.")
-    df = pd.read_csv(path, parse_dates=[DATE])
-    return add_trend(df)[[DATE, *SPEND_COLUMNS, *CONTROLS, TARGET]]
+def load_synthetic(db_path: Path | None = None) -> pd.DataFrame:
+    """The MMM training frame, read with SQL from the DuckDB warehouse.
+
+    The trend column is computed in SQL (see warehouse/sql/create_views.sql).
+    """
+    from mbc.warehouse import DB_PATH, read_sql
+
+    df = read_sql("mmm_training_frame", db_path or DB_PATH)
+    df[DATE] = pd.to_datetime(df[DATE])
+    return df[[DATE, *SPEND_COLUMNS, *CONTROLS, TARGET]]
 
 
 def split_holdout(df: pd.DataFrame, holdout_weeks: int = 12) -> Split:

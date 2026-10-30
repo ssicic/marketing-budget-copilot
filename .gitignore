@@ -24,3 +24,5 @@ mlartifacts/
 .DS_Store
 models/
 mlflow.db
+data/*.duckdb
+data/*.duckdb.wal
