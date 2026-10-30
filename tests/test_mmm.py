@@ -162,7 +162,7 @@ def test_mmm_fits_end_to_end(frame):
     s = split_holdout(frame, 12)
     mmm = build_mmm("informed", spend_share(s.train))
     X, y = s.xy("train")
-    idata = mmm.fit(X, y, draws=30, tune=30, chains=1, progressbar=False, random_seed=0)
+    idata = mmm.fit(X, y, draws=30, tune=30, chains=2, progressbar=False, random_seed=0)
     assert set(idata.posterior["channel"].values) == set(SPEND_COLUMNS)
     diag = ev.diagnostics(idata)
     assert "max_r_hat" in diag
