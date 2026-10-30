@@ -173,7 +173,7 @@ def main() -> None:
     p.add_argument("--draws", type=int, default=1000)
     p.add_argument("--tune", type=int, default=1500)
     p.add_argument("--chains", type=int, default=4)
-    p.add_argument("--target-accept", type=float, default=0.97)
+    p.add_argument("--target-accept", type=float, default=0.99)
     p.add_argument("--quick", action="store_true", help="2 chains x 200 draws")
     p.add_argument("--run-name", default=None)
     p.add_argument("--no-mlflow", action="store_true")
